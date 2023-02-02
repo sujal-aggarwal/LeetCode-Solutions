@@ -1,31 +1,43 @@
 class Solution {
 public:
-    bool isSorted(vector<string>& words,string order,int index,int*dp)
-    {
-        if(index==words.size()||index==words.size()-1)
-            return dp[index]=true;
-        if(dp[index]!=-1)
-            return dp[index];
-        bool ans=isSorted(words,order,index+1,dp);
-        if(!ans)
-            return dp[index]=false;
-        for(int i=0;i<min(words[index].size(),words[index+1].size());i++)
-        {
-            int a=find(order.begin(),order.end(),words[index][i])-order.begin();
-            int b=find(order.begin(),order.end(),words[index+1][i])-order.begin();
-            if(a>b)
-                return dp[index]=false;
-            else if(a<b)
-                return dp[index]=true;
-        }
-        if(words[index].size()>words[index+1].size())
-            return dp[index]=false;
-        return dp[index]=true;
-    }
     bool isAlienSorted(vector<string>& words, string order) {
-        int *dp=new int[words.size()+1];
-        for(int i=0;i<=words.size();i++)
+        int n=words.size();
+        int *dp=new int[n+1];
+        for(int i=0;i<=n;i++)
             dp[i]=-1;
-        return isSorted(words,order,0,dp);
+        if(n==1||n==0)
+            return true;
+        dp[n]=1;
+        dp[n-1]=1;
+        for(int i=n-2;i>=0;i--)
+        {
+            bool ans=dp[i+1];
+            if(!ans){
+                dp[i]=0;
+                continue;
+            }
+            for(int j=0;j<min(words[i].size(),words[i+1].size());j++)
+            {
+                int a=find(order.begin(),order.end(),words[i][j])-order.begin();
+                int b=find(order.begin(),order.end(),words[i+1][j])-order.begin();
+                if(a>b){
+                    dp[i]=0;
+                    break;
+                }
+                else if(a<b){
+                    dp[i]=1;
+                    break;
+                }
+            }
+            if(dp[i]==-1)
+            {
+                if(words[i].size()>words[i+1].size()){
+                    dp[i]=0;
+                }
+                else
+                    dp[i]=1;
+            }
+        }
+        return dp[0];
     }
 };
