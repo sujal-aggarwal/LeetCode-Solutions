@@ -9,16 +9,15 @@
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        vector<ListNode*>arr;
+        map<ListNode*,bool>mp;
         ListNode*temp=head;
         while(temp!=NULL)
         {
-            auto index=find(arr.begin(),arr.end(),temp);
-            if(index!=arr.end())
+            if(mp.count(temp)>0)
             {
                 return temp;
             }
-            arr.push_back(temp);
+            mp[temp]=true;
             temp=temp->next;
         }
         return NULL;
