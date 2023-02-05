@@ -9,7 +9,7 @@
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        map<ListNode*,bool>mp;
+        unordered_map<ListNode*,bool>mp;
         ListNode*temp=head;
         while(temp!=NULL)
         {
