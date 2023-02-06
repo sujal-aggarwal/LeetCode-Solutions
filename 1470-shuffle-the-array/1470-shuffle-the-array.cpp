@@ -1,16 +1,16 @@
 class Solution {
 public:
     vector<int> shuffle(vector<int>& nums, int n) {
-        vector<int>arr;
-        int i=0;
-        int j=n;
-        while(j<2*n)
+        for(int i=0;i<n;i++)
         {
-            arr.push_back(nums[i]);
-            arr.push_back(nums[j]);
-            i++;
-            j++;
+            nums[i]=nums[i]<<10;
+            nums[i]|=nums[i+n];
         }
-        return arr;
+        for(int i=n-1;i>=0;i--)
+        {
+            nums[(2*i)+1]=nums[i]&1023;
+            nums[2*i]=(nums[i])>>10;
+        }
+        return nums;
     }
 };
