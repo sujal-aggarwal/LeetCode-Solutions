@@ -4,15 +4,15 @@ public:
         int left=0;
         int right=0;
         int size=0;
-        map<char,int>mp;
+        vector<int>v(256,0);
         while(right<s.size())
         {
-            mp[s[right]]++;
-            if(mp[s[right]]>1)
+            v[s[right]]++;
+            if(v[s[right]]>1)
             {
                 size=max(size,right-left);
-                while(mp[s[right]]>1){
-                    mp[s[left]]--;
+                while(v[s[right]]>1){
+                    v[s[left]]--;
                     left++;
                 }
                 right++;
