@@ -1,21 +1,17 @@
 class Solution {
 public:
-    int INF=1e9+7;
     int jump(vector<int>& nums) {
-        if(nums.size()==1)
-            return 0;
-        int n=nums.size();
-        int *dp=new int[n];
-        dp[n-1]=0;
-        for(int i=n-2;i>=0;i--)
+        int jumps=0;
+        int n=nums.size(),end=0,can_reach=0;
+        for(int i=0;i<n-1;i++)
         {
-            dp[i]=INF;
-            for(int j=1;j<=nums[i]&&i+j<nums.size();j++)
+            can_reach=max(can_reach,i+nums[i]);
+            if(i==end)
             {
-                dp[i]=min(dp[i],dp[i+j]);
+                jumps++;
+                end=can_reach;
             }
-            dp[i]++;
         }
-        return dp[0];
+        return jumps;
     }
 };
