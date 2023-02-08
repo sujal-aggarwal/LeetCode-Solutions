@@ -25,8 +25,9 @@ public:
             bool found=true;
             for(int i=0;i<n;i++)
             {
-                if(mp[words[i]]==0)
-                    found= false;
+                if(mp[words[i]]==0){
+                    found= false;break;
+                }
                 mp[words[i]]--;
             }
             if(found){
