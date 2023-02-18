@@ -1,16 +1,20 @@
 class Solution {
 public:
-    bool sorted(vector<int>&nums,int&i){
-        for(;i<nums.size()-1;i++){
-            if(nums[i]>nums[i+1])
-                return false;
-        }
-        return true;
-    }
     int findMin(vector<int>& nums) {
-        int i=0;
-        if(sorted(nums,i))
-            return nums[0];
-        return nums[i+1];
+        int low = 0;
+        int high = nums.size()-1;
+        while(low < high){
+            int mid = low + (high-low)/2;
+            if(nums[mid] < nums[high]){
+                high = mid;
+            }
+            else if(nums[mid] > nums[high]){
+                low = mid+1;
+            }
+            else{
+                high-=1;
+            }
+        }
+        return nums[low];
     }
 };
