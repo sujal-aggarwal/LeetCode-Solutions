@@ -1,10 +1,16 @@
 class Solution {
 public:
     int singleNonDuplicate(vector<int>& nums) {
-        int a=0;
-        for(int i=0;i<nums.size();i++){
-            a^=nums[i];
+        int l=-1,r=nums.size();
+        while(r>l+1){
+            int mid=l+(r-l)/2;
+            if((mid%2==0&&mid<nums.size()-1&&nums[mid]==nums[mid+1])||(mid%2!=0&&mid>=0&&nums[mid]==nums[mid-1])){
+                l=mid;
+            }
+            else
+                r=mid;
         }
-        return a;
+        cout<<l<<" "<<r<<endl;
+        return nums[r];
     }
 };
