@@ -14,7 +14,7 @@ public:
         return count<=days;
     }
     int shipWithinDays(vector<int>& weights, int days) {
-        int left=0,right=accumulate(weights.begin(),weights.end(),0);
+        int left=*max_element(weights.begin(),weights.end())-1,right=accumulate(weights.begin(),weights.end(),0);
         while(right>left+1){
             int mid=(left+right)/2;
             if(isPossible(weights,days,mid))
