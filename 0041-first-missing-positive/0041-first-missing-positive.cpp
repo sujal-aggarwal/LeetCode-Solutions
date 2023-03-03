@@ -5,20 +5,19 @@ public:
             This question uses a new approach 
             i.e. Negative Marking
         */
-        set<int>s;
+        for(int j=0;j<nums.size();j++){
+            while(nums[j]>0&&nums[j]<=nums.size()&&nums[nums[j]-1]!=nums[j]){
+                swap(nums[nums[j]-1],nums[j]);
+            }
+        }
         for(auto i:nums){
-            if(i>0)
-                s.insert(i);
+            cout<<i<<" ";
         }
-        int k=1;
-        for(auto i:s){
-            if(i!=k)
-                return k;
-            k++;
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]!=i+1){
+                return i+1;
+            }
         }
-        if(!s.size()){
-            return 1;
-        }
-        return k;
+        return nums.size()+1;
     }
 };
