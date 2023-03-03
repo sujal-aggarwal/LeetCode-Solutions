@@ -1,4 +1,4 @@
-unordered_map<int,int>m;
+int m[1000001];
 class Solution {
 public:
     vector<int> arrayChange(vector<int>& nums, vector<vector<int>>& operations) {
@@ -7,11 +7,9 @@ public:
             m[nums[i]]=i;
         }
         for(auto i:operations){
-            int element=i[0];
-            int new_element=i[1];
-            int j=m[element];
-            nums[j]=new_element;
-            m[new_element]=j;
+            int j=m[i[0]];
+            nums[j]=i[1];
+            m[i[1]]=j;
         }
         return nums;
     }
