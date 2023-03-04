@@ -8,7 +8,7 @@ public:
                 minPosition=i;
             }if(nums[i]==maxK){
                 maxPosition=i;
-            }if(nums[i]>maxK||nums[i]<minK){
+            }else if(nums[i]>maxK||nums[i]<minK){
                 leftbound=i;
             }
             count+=max(0,min(minPosition,maxPosition)-leftbound);
