@@ -1,17 +1,14 @@
 class Solution {
 public:
     int partitionString(string s) {
-        vector<int>v(26,0);
-        int count=1;
+        int count=1,a=0;
         for(auto i:s){
-            if(v[i-'a']>0){
-                v.clear();
+            int val=i-'a';
+            if(a&(1<<val)){
+                a=0;
                 count++;
-                v.resize(26,0);
-                v[i-'a']++;
-                continue;
             }
-            v[i-'a']++;
+            a=a|(1<<val);
         }
         return count;
     }
