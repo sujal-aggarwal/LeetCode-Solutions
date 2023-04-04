@@ -1,16 +1,17 @@
 class Solution {
 public:
     int partitionString(string s) {
-        unordered_map<char,int>mp;
+        vector<int>v(26,0);
         int count=1;
         for(auto i:s){
-            if(mp[i]>0){
-                mp.clear();
+            if(v[i-'a']>0){
+                v.clear();
                 count++;
-                mp[i]++;
+                v.resize(26,0);
+                v[i-'a']++;
                 continue;
             }
-            mp[i]++;
+            v[i-'a']++;
         }
         return count;
     }
