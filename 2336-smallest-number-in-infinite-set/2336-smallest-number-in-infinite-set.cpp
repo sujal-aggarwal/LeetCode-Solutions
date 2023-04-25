@@ -1,20 +1,20 @@
 class SmallestInfiniteSet {
 public:
-    map<int,bool>mp;
+    set<int>s;
     SmallestInfiniteSet() {
         for(int i=1;i<=1000;i++){
-            mp[i]=true;
+            s.insert(i);
         }
     }
     
     int popSmallest() {
-        int ans=(mp.begin())->first;
-        mp.erase(ans);
+        int ans=(*s.begin());
+        s.erase(ans);
         return ans;
     }
     
     void addBack(int num) {
-        mp[num]=true;
+        s.insert(num);
     }
 };
 
