@@ -1,8 +1,7 @@
 class Solution {
 public:
     vector<int> longestObstacleCourseAtEachPosition(vector<int>& obstacles) {
-        vector<int>arr;
-        vector<int>ans;
+        vector<int>arr,ans;
         for(auto i:obstacles){
             int index=upper_bound(arr.begin(),arr.end(),i)-arr.begin();
             if(index==arr.size()){
