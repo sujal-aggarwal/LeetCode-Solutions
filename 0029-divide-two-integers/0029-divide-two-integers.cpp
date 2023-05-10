@@ -1,29 +1,30 @@
 class Solution {
 public:
-    int divide(int dividend, int divisor) {
-        if(divisor==1){
-            return dividend;
+    int divide(int dvd, int dis) {
+        if(dis==1){
+            return dvd;
         }
-        if(divisor==-1){
-            if(dividend==-2147483648){
-                return 2147483647;
+        if(dis==-1){
+            if(dvd==INT_MIN){
+                return INT_MAX;
             }
-            return -1*dividend;
+            return -1*dvd;
         }
-        long long a=abs(dividend);
-        long long b=abs(divisor);
-        long long sum=b;
-        int count=0;
-        while(sum<=a)
+        int sign = ((dvd<0)^(dis<0))?-1:1;
+        unsigned int dividend=abs(dvd);
+        unsigned int divisor=abs(dis);
+        long long quotient=0;
+        while(dividend>=divisor)
         {
-            // if(count<2147483647)
-                count++;
-            sum+=b;
+            long long temp=divisor;
+            int p=0;
+            while((temp<<1)<=dividend){
+                temp=temp<<1;
+                p++;
+            }
+            dividend-=temp;
+            quotient+=1<<p;
         }
-        if(dividend<0&&divisor<0)
-            return count;
-        else if(dividend<0||divisor<0)
-            return count*-1;
-        return count;
+        return quotient*sign;
     }
 };
