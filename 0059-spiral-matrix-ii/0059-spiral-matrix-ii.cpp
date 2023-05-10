@@ -9,24 +9,18 @@ public:
                 ans[row_start][i]=cnt++;
             }
             row_start++;
-            if(row_end>=row_start){
-                for(int i=row_start;i<=row_end;i++){
-                    ans[i][col_end]=cnt++;
-                }
-                col_end--;
-                if(col_end>=col_start){
-                    for(int i=col_end;i>=col_start;i--){
-                        ans[row_end][i]=cnt++;
-                    }
-                    row_end--;
-                    if(row_end>=row_start){
-                        for(int i=row_end;i>=row_start;i--){
-                            ans[i][col_start]=cnt++;
-                        }
-                        col_start++;
-                    }
-                }
+            for(int i=row_start;i<=row_end&&row_end>=row_start;i++){
+                ans[i][col_end]=cnt++;
             }
+            col_end--;
+            for(int i=col_end;i>=col_start&&col_end>=col_start;i--){
+                ans[row_end][i]=cnt++;
+            }
+            row_end--;
+            for(int i=row_end;i>=row_start&&row_end>=row_start;i--){
+                ans[i][col_start]=cnt++;
+            }
+            col_start++;
         }
         return ans;
     }
