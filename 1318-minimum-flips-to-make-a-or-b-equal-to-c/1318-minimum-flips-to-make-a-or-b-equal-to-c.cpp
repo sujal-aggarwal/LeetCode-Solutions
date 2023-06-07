@@ -11,8 +11,7 @@ public:
             if(c_bit==1){
                 cnt+=1;
             }else{
-                if(a_bit==1&&b_bit==1){cnt+=2;}
-                else{cnt++;}
+                cnt+=a_bit+b_bit;
             }
         }
         return cnt;
