@@ -3,22 +3,25 @@ public:
     long long totalCost(vector<int>& costs, int k, int candidates) {
         long long val=0;
         int i=0,j=costs.size()-1;
-        priority_queue<int,vector<int>,greater<int>>pq1,pq2;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        while(pq.size()<candidates&&i<=j){
+            pq.push({costs[i],0});i++;
+        }
+        int cnt=0;
+        while(cnt<candidates&&i<=j){
+            pq.push({costs[j],1});j--;cnt++;
+        }
         while(k>0){
-            while(pq1.size()<candidates&&i<=j){
-                pq1.push(costs[i]);i++;
+            auto m=pq.top();
+            pq.pop();
+            val+=m.first;
+            if(m.second){
+                if(j>=i)
+                    pq.push({costs[j--],1});
             }
-            while(pq2.size()<candidates&&i<=j){
-                pq2.push(costs[j]);j--;
-            }
-            int min1=((pq1.empty())?INT_MAX:pq1.top());
-            int min2=((pq2.empty())?INT_MAX:pq2.top());
-            if(min1<=min2){
-                val+=min1;
-                pq1.pop();
-            }else{
-                val+=min2;
-                pq2.pop();
+            else{
+                if(j>=i)
+                    pq.push({costs[i++],0});
             }
             k--;
         }
