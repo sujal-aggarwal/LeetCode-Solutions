@@ -7,27 +7,12 @@ public:
         int sum=0;
         while(j<n){
             sum+=nums[j];
-            if(sum>=target){
+            while(sum>=target&&i<=j){
                 length=min(length,j-i+1);
-                while(sum>target&&i<j){
-                    length=min(length,j-i+1);
-                    sum-=nums[i];
-                    i++;
-                }
-                if(sum==target){
-                    length=min(length,j-i+1);
-                }
+                sum-=nums[i];
+                i++;
             }
             j++;
-        }
-        j--;
-        while(sum>target&&i<j){
-            length=min(length,j-i+1);
-            sum-=nums[i];
-            i++;
-        }
-        if(sum==target){
-            length=min(length,j-i+1);
         }
         return (length==INT_MAX)?0:length;
     }
