@@ -6,8 +6,8 @@ public:
         if(ind==n||k==0)return 0;
         if(dp[ind][k]!=-1)return dp[ind][k];
         int a=ans(events,ind+1,k);
-        vector<int>temp={events[ind][1],INT_MAX,INT_MAX};
-        int next_ind=upper_bound(events.begin()+ind+1,events.end(),temp)-events.begin();
+        vector<int>temp={events[ind][1]+1,INT_MIN,INT_MIN};
+        int next_ind=lower_bound(events.begin()+ind+1,events.end(),temp)-events.begin();
         int b=ans(events,next_ind,k-1)+events[ind][2];
         return dp[ind][k]=max(a,b);
     }
