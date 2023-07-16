@@ -1,8 +1,8 @@
 class Solution {
 public:
-    int n;//m
-    int total_bits; //n
-    int bitmask;//target_mask
+    int n;
+    int total_bits; 
+    int bitmask;
     vector<int>result;
     unordered_map<string , int > dp;
     
