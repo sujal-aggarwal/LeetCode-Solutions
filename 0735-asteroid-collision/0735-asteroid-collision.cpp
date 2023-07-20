@@ -1,40 +1,30 @@
 class Solution {
 public:
-    bool notstrike(int i,int j){
-        if(i<0)return true;
-        if(j>0)return true;
-        return false;
-    }
     vector<int> asteroidCollision(vector<int>& asteroids) {
-        vector<int>res;
-        for(auto i:asteroids){
-            if(res.size()==0||notstrike(res.back(),i)){
-                res.push_back(i);
-            }else if(!notstrike(res.back(),i)){
-                if(res.back()>abs(i)){
+        stack<int> st;
+        
+        for (int i : asteroids) {
+            int flag = 1;
+            while (!st.empty() && (st.top() > 0 && i < 0)) {
+                if (abs(st.top()) < abs(i)) {
+                    st.pop();
                     continue;
-                }else if(res.back()==abs(i)){
-                    res.pop_back();
-                }else{
-                    while(res.size()>0){
-                        if(notstrike(res.back(),i)){
-                            break;
-                        }
-                        if(res.back()>abs(i)){
-                            i=INT_MIN;
-                            break;
-                        }
-                        else if(res.back()==abs(i)){
-                            res.pop_back();
-                            i=INT_MIN;
-                            break;
-                        }
-                        res.pop_back();
-                    }
-                    if(i!=INT_MIN)
-                        res.push_back(i);
                 }
+                else if (abs(st.top()) == abs(i)) {
+                    st.pop();
+                }
+                flag = 0;
+                break;
             }
+            
+            if (flag) {
+                st.push(i);
+            }
+        }
+        vector<int> res (st.size());
+        for (int i = res.size() - 1; i >= 0; i--){
+            res[i] = st.top();
+            st.pop();
         }
         return res;
     }
