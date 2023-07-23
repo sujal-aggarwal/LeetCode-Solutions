@@ -11,37 +11,31 @@
  */
 class Solution {
 public:
-    vector<vector<TreeNode*>>dp;
     vector<TreeNode*> solve(int n){
         if(n%2==0){
-            return dp[n]={};
+            return {};
         }
-        if(n==1){
-            TreeNode*root=new TreeNode(0);
-            return dp[1]={root};
-        }
+        vector<vector<TreeNode*>>dp(n+1);
         
-        if(!dp[n].empty())return dp[n];
+        dp[1]={new TreeNode(0)};
         
-        vector<TreeNode*>result;
-        
-        for(int i=1;i<n;i++){
-            vector<TreeNode*>left=solve(i);
-            vector<TreeNode*>right=solve(n-i-1);
-            for(auto&l:left){
-                for(auto&r:right){
-                    TreeNode*root=new TreeNode(0);
-                    root->left=l;
-                    root->right=r;
-                    result.push_back(root);
+        for(int curr=3;curr<=n;curr+=2){
+            for(int i=1;i<curr-1;i+=2){
+                
+                for(auto&l:dp[i]){
+                    for(auto&r:dp[curr-i-1]){
+                        TreeNode*root=new TreeNode(0);
+                        root->left=l;
+                        root->right=r;
+                        dp[curr].push_back(root);
+                    }
                 }
             }
         }
         
-        return dp[n]=result;
+        return dp[n];
     }
     vector<TreeNode*> allPossibleFBT(int n) {
-        dp.resize(n+1);
         return solve(n);
     }
 };
