@@ -11,14 +11,17 @@
  */
 class Solution {
 public:
+    vector<vector<TreeNode*>>dp;
     vector<TreeNode*> solve(int n){
         if(n%2==0){
-            return {};
+            return dp[n]={};
         }
         if(n==1){
             TreeNode*root=new TreeNode(0);
-            return {root};
+            return dp[1]={root};
         }
+        
+        if(!dp[n].empty())return dp[n];
         
         vector<TreeNode*>result;
         
@@ -35,9 +38,10 @@ public:
             }
         }
         
-        return result;
+        return dp[n]=result;
     }
     vector<TreeNode*> allPossibleFBT(int n) {
+        dp.resize(n+1);
         return solve(n);
     }
 };
