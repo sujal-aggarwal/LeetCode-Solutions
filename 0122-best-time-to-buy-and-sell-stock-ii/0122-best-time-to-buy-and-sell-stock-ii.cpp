@@ -10,7 +10,7 @@ public:
         if(dp[ind][buy]!=-1)return dp[ind][buy];
         
         if(buy){
-            int take=solve(prices,ind,false)-prices[ind];
+            int take=solve(prices,ind+1,false)-prices[ind];
             int not_take=solve(prices,ind+1,buy);
             profit=max({profit,take,not_take});
         }else{
