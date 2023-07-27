@@ -10,18 +10,17 @@ public:
         return false;
     }
     long long maxRunTime(int n, vector<int>& a) {
-        ll l=*min_element(a.begin(),a.end());
+        ll l=*min_element(a.begin(),a.end())-1;
         ll r=accumulate(a.begin(),a.end(),0LL)/n;
-        ll res=0;
-        while(r>=l){
+        r++;
+        while(r>l+1){
             ll mid=l+(r-l)/2;
             if(check(a,mid,n)){
-                res=mid;
-                l=mid+1;
+                l=mid;
             }else{
-                r=mid-1;
+                r=mid;
             }
         }
-        return res;
+        return l;
     }
 };
