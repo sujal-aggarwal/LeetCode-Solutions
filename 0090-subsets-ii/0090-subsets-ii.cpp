@@ -1,30 +1,26 @@
 class Solution {
 public:
     int n;
-    multiset<int> solve(vector<int>&nums,int bit){
-        multiset<int>arr;
-        for(int i=n-1;i>=0&&bit>0;i--){
-            if(bit&1){
-                arr.insert(nums[i]);
-            }
-            bit=bit>>1;
-        }
-        return arr;
-    }
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
         n=nums.size();
-        set<multiset<int>>s;
-        vector<vector<int>>arr;
+        sort(nums.begin(),nums.end());
+        vector<vector<int>>ans;
+        unordered_map<string,int>appeared;
         for(int i=0;i<(1<<n);i++){
-            s.insert(solve(nums,i));
-        }
-        for(auto i:s){
-            vector<int>a;
-            for(auto j:i){
-                a.push_back(j);
+            vector<int>arr;
+            string hashcode;
+            for(int j=0;j<n;j++){
+                int bit=(i>>j)&1;
+                if(bit){
+                    arr.push_back(nums[j]);
+                    hashcode+=(to_string(nums[j])+" ");
+                }
             }
-            arr.push_back(a);
+            if(!appeared.count(hashcode)){
+                ans.push_back(arr);
+                appeared[hashcode]++;
+            }
         }
-        return arr;
+        return ans;
     }
 };
