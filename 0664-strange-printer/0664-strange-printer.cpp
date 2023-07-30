@@ -7,13 +7,13 @@ public:
         if(l>r)return 0;
         if(dp[l][r]!=-1)return dp[l][r];
         int i=l;
-        for(;i<n;i++){
+        for(;i<=r;i++){
             if(s[i]!=s[l])break;
         }
-        if(i==n)return 1;
+        if(i==r+1)return 1;
         int no_partition=1+solve(s,i,r);
         int partition=INT_MAX;
-        for(int j=i;j<n;j++){
+        for(int j=i;j<=r;j++){
             if(s[j]==s[l]){
                 partition=min(partition,solve(s,i,j-1)+solve(s,j,r));
             }
