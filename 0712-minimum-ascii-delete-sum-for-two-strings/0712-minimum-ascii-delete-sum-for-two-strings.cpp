@@ -16,7 +16,7 @@ public:
         }
         if(dp[i][j]!=-1)return dp[i][j];
         if(s1[i]==s2[j]){
-            return ascii(s1,s2,i+1,j+1);
+            return dp[i][j]=ascii(s1,s2,i+1,j+1);
         }
         int a=s1[i]+ascii(s1,s2,i+1,j);
         int b=s2[j]+ascii(s1,s2,i,j+1);
