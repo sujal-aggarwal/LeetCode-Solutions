@@ -1,10 +1,9 @@
 class Solution {
 public:
     int scoreOfString(string s) {
-        int ans=0;
-        for(int i=1;i<s.size();i++){
-            ans+=abs(s[i-1]-s[i]);
-        }
-        return ans;
+        int index=0;
+        return accumulate(s.begin()+1, s.end(), 0, [&s,&index](int total, char c) mutable {
+            return total + abs(s[index++] - c);
+        });
     }
 };
