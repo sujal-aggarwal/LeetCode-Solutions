@@ -1,25 +1,39 @@
-#define ll long long
 class Solution {
 public:
-    bool isNStraightHand(vector<int>& hand, int groupsize) {
-        if(hand.size()%groupsize)return false;
-        if(groupsize==1)return true;
-        map<ll,ll>mp;
-        for(int i:hand){
-            ll j=i;
-            mp[j]++;
+    bool isNStraightHand(vector<int>& hand, int groupSize) {
+        if (hand.size() % groupSize != 0) {
+            return false;
         }
-        for(auto [x,y]:mp){
-            if(y==0)continue;
-            for(ll i=0;i<groupsize;i++){
-                if(mp[x+i]<y){
-                    return false;
+
+        unordered_map<int, int> cardCount;
+        for (int card : hand) {
+            cardCount[card]++;
+        }
+
+        for (int card : hand) {
+            int startCard = card;
+            // Find the start of the potential straight sequence
+            while (cardCount[startCard - 1]) {
+                startCard--;
+            }
+
+            // Process the sequence starting from startCard
+            while (startCard <= card) {
+                while (cardCount[startCard]) {
+                    // Check if we can form a consecutive sequence of
+                    // groupSize cards
+                    for (int nextCard = startCard;
+                         nextCard < startCard + groupSize; nextCard++) {
+                        if (!cardCount[nextCard]) {
+                            return false;
+                        }
+                        cardCount[nextCard]--;
+                    }
                 }
-                else{
-                    mp[x+i]-=y;
-                }
+                startCard++;
             }
         }
+
         return true;
     }
 };
