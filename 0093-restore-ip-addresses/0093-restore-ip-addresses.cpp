@@ -31,8 +31,7 @@ public:
         }
     }
     vector<string> restoreIpAddresses(string s) {
-        string k="";
-        restore(s,4,k);
+        restore(s,4,string());
         return ans;
     }
 };
