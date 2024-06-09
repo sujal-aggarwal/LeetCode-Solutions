@@ -23,11 +23,6 @@ public:
                 count+=y;
                 continue;
             }
-            int c2=x-k;
-            if(mp.find(c2)!=mp.end() && c2!=x){
-                count+=(y*mp[c2]);
-            }
-            y=0;
         }
         return count;
     }
