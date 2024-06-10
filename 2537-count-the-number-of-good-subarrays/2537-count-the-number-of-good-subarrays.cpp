@@ -10,9 +10,7 @@ public:
         ll ans = 0;
         map<ll,ll>check;
         while(j<n){
-            
             m[nums[j]]++;
-            ll curr = m[nums[j]]*(m[nums[j]]-1)/2;
            total += m[nums[j]]-1; 
             while(i<j && total>=k){
                 ans++;
