@@ -4,11 +4,11 @@ public:
     long long countGood(vector<int>& nums, int k) {
         ll n = nums.size();
         ll i=0;
-        map<ll,ll>m;
+        unordered_map<ll,ll>m;
         ll total = 0;
         ll j=0;
         ll ans = 0;
-        map<ll,ll>check;
+        unordered_map<ll,ll>check;
         while(j<n){
             m[nums[j]]++;
            total += m[nums[j]]-1; 
