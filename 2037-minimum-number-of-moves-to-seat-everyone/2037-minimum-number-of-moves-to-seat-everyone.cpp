@@ -1,13 +1,26 @@
 class Solution {
 public:
     int minMovesToSeat(vector<int>& seats, vector<int>& students) {
-        sort(seats.begin(),seats.end());
-        sort(students.begin(),students.end());
-        int n=seats.size();
-        int cnt=0;
-        for(int i=0;i<n;i++){
-            cnt+=abs(seats[i]-students[i]);
+        int maximum=0;
+        for(int i:students){
+            maximum=max(maximum,i);
         }
-        return cnt;
+        for(int i:seats){
+            maximum=max(maximum,i);
+        }
+        vector<int>arr(maximum,0);
+        for(int i:students){
+            arr[i-1]--;
+        }
+        for(int i:seats){
+            arr[i-1]++;
+        }
+        int moves=0;
+        int left=0;
+        for(int i:arr){
+            moves+=abs(left);
+            left+=i;
+        }
+        return moves;
     }
 };
