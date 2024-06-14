@@ -3,22 +3,30 @@ public:
     int n;
     int minIncrementForUnique(vector<int>& nums) {
         n=nums.size();
-        int l=1e5;
-        unordered_map<int,int>mp;
+        map<int,int>mp;
         for(int i:nums){
             mp[i]++;
-            l=min(l,i);
         }
         if(mp.size()==n)return 0;
         int cnt=0;
-        while(mp.size()<n){
-            if(mp.find(l)!=mp.end() && mp[l]>1){
-               int a=mp[l];
-                mp[l]-=(a-1);
-                mp[l+1]+=(a-1);
-                cnt+=(a-1);
+        int prev=mp.begin()->first,left=mp.begin()->second-1;
+        for(auto [x,y]:mp){
+            int spaces=x-prev-1;
+            if(spaces<0)continue;
+            if(spaces>=left){
+                cnt+=(left*(left+1))/2;
+                left=y-1;
+                prev=x;
+            }else if(spaces<left){
+                cnt+=(spaces*(spaces+1))/2;
+                cnt+=((left-spaces)*(x-prev));
+                left-=spaces;
+                left+=y-1;
+                prev=x;
             }
-            l++;
+        }
+        if(left){
+            cnt+=(left*(left+1))/2;
         }
         return cnt;
     }
