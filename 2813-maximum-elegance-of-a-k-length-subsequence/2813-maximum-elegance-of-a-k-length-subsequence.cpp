@@ -34,7 +34,7 @@ public:
             
             mp[p[1]]--;
             mp[items[i][1]]++;
-            pq.push(items[i]);
+            // pq.push(items[i]);
             
             ans=max(curr,ans);
         }
