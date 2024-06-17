@@ -4,6 +4,14 @@ class TrieNode{
         bool isEnd;
 
         TrieNode():next(10,nullptr),isEnd{false}{}
+    
+        ~TrieNode(){
+            for(int i=0;i<10;i++){
+                if(next[i]!=nullptr){
+                    delete next[i];
+                }
+            }
+        }
 };
 class Trie{
     private:
