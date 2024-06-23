@@ -7,14 +7,8 @@ public:
         int i=0,j=0;
         while(j<n){
             s.insert(nums[j]);
-            int min_element=*s.begin();
-            int max_element=*s.rbegin();
-            if(max_element-min_element>limit){
-                while(max_element-min_element>limit && i<j){
-                    s.erase(s.find(nums[i++]));
-                    min_element=*s.begin();
-                    max_element=*s.rbegin();
-                }
+            while(*s.rbegin()-*s.begin()>limit && i<j){
+                s.erase(s.find(nums[i++]));
             }
             ans=max(ans,j-i+1);
             j++;
