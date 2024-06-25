@@ -13,10 +13,8 @@ class Solution {
 public:
     int Sum(TreeNode* root, int a){
         if(root==NULL)return a;
-        int sum=Sum(root->right,a);
-        root->val=root->val+sum;
-        int sum2=Sum(root->left,root->val);
-        return sum2;
+        root->val+=Sum(root->right,a);
+        return Sum(root->left,root->val);
     }
     TreeNode* bstToGst(TreeNode* root) {
         Sum(root,0);
