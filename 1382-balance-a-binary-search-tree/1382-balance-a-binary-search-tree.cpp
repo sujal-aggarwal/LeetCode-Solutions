@@ -10,26 +10,61 @@
  * };
  */
 class Solution {
-public:
-    vector<int>arr;
-    void inorder(TreeNode* root){
-        if(root==nullptr)return;
-        inorder(root->left);
-        arr.push_back(root->val);
-        inorder(root->right);
-    }
-    TreeNode* solve(int l,int r){
-        if(l>r){
-            return nullptr;
+private:
+    TreeNode* vinehead;
+    void makeRotations(int count){
+        TreeNode* curr=vinehead;
+        for(int i=0;i<count;i++){
+            TreeNode* tmp=curr->right;
+            leftRotate(curr,tmp);
+            curr=curr->right;
         }
-        int mid=l+(r-l)/2;
-        TreeNode* root=new TreeNode(arr[mid]);
-        root->left=solve(l,mid-1);
-        root->right=solve(mid+1,r);
-        return root;
     }
+    void leftRotate(TreeNode* parent, TreeNode* child){
+        TreeNode* tmp=child->right;
+        child->right=tmp->left;
+        tmp->left=child;
+        parent->right=tmp;
+    }
+    void rightRotate(TreeNode* parent, TreeNode* child){
+        TreeNode* tmp=child->left;
+        child->left=tmp->right;
+        tmp->right=child;
+        parent->right=tmp;
+    }
+    
+public:
     TreeNode* balanceBST(TreeNode* root) {
-        inorder(root);
-        return solve(0,arr.size()-1);
+        if(root==nullptr)return root;
+        
+        
+        vinehead=new TreeNode(0);
+        vinehead->right=root;
+        TreeNode*current=vinehead;
+        while(current->right){
+            if(current->right->left)
+                rightRotate(current,current->right);
+            else
+                current=current->right;
+        }
+        
+        
+        int nodeCount=0;
+        current=vinehead->right;
+        while(current){
+            nodeCount++;
+            current=current->right;
+        }
+        
+        int m=pow(2,floor(log2(nodeCount+1)))-1;
+        makeRotations(nodeCount-m);
+        while(m>1){
+            m/=2;
+            makeRotations(m);
+        }
+        
+        TreeNode* balancedBst=vinehead->right;
+        delete vinehead;
+        return balancedBst;
     }
 };
