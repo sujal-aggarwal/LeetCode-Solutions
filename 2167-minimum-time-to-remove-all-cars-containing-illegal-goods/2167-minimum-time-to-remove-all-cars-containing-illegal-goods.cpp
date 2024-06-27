@@ -36,15 +36,9 @@ public:
         dp[0][1] = (s[0] == '0') ? 0 : 2;  // LEAVE
 
         for (int i = 1; i < n; ++i) {
-            if (s[i] == '0') {
-                dp[i][1] = min(dp[i - 1][1], dp[i - 1][0]);  // LEAVE
-                dp[i][0] = 1 + dp[i - 1][0];  // REMOVE_FROM_LEFT
-                dp[i][2] = 1 + min({dp[i - 1][0], dp[i - 1][2], dp[i - 1][1]});  // REMOVE_FROM_RIGHT
-            } else {
-                dp[i][1] = 2 + min(dp[i - 1][1], dp[i - 1][0]);  // LEAVE
-                dp[i][0] = 1 + dp[i - 1][0];  // REMOVE_FROM_LEFT
-                dp[i][2] = 1 + min({dp[i - 1][0], dp[i - 1][2], dp[i - 1][1]});  // REMOVE_FROM_RIGHT
-            }
+            dp[i][1] = ((s[i]=='0')?0:2) + min(dp[i - 1][1], dp[i - 1][0]);  // LEAVE
+            dp[i][0] = 1 + dp[i - 1][0];  // REMOVE_FROM_LEFT
+            dp[i][2] = 1 + min({dp[i - 1][0], dp[i - 1][2], dp[i - 1][1]});  // REMOVE_FROM_RIGHT
         }
 
         return min({dp[n - 1][0], dp[n - 1][1], dp[n - 1][2]});
