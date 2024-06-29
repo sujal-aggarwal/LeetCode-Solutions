@@ -1,27 +1,55 @@
 class Solution {
 public:
     int n;
-    unordered_map<int,vector<int>> graph;
-    void dfs(vector<vector<int>>&ans, int parent, int source){
-        for(auto i:graph[parent]){
-            if(ans[i].empty() || ans[i].back()!= source){
-                ans[i].push_back(source);
-                dfs(ans,i,source);
+    unordered_map<int,vector<int>> adj;
+    void topoSort(vector<int>& ans){
+        vector<int>indegree(n,0);
+        for(int i=0;i<n;i++){
+            for(auto j:adj[i]){
+                indegree[j]++;
             }
         }
-        return ;
+        
+        queue<int>q;
+        for(int i=0;i<n;i++){
+            if(indegree[i]==0)q.push(i);
+        }
+        
+        while(!q.empty()){
+            int node=q.front();
+            q.pop();
+            ans.push_back(node);
+            for(auto i:adj[node]){
+                indegree[i]--;
+                if(indegree[i]==0)q.push(i);
+            }
+        }
     }
     vector<vector<int>> getAncestors(int n, vector<vector<int>>& edges) {
         this->n=n;
         for(auto vec:edges){
-            int i=vec[0];
-            int j=vec[1];
-            graph[i].push_back(j);
+            int u=vec[0];
+            int v=vec[1];
+            adj[u].push_back(v);
         }
+        vector<int>topologicalArray;
+        topoSort(topologicalArray);
+        vector ancestors(n,unordered_set<int>());
+        
+        for(auto i:topologicalArray){
+            for(auto j:adj[i]){
+                ancestors[j].insert(i);
+                ancestors[j].insert(ancestors[i].begin(),ancestors[i].end());
+            }
+        }
+        
         vector ans(n,vector<int>());
+        
         for(int i=0;i<n;i++){
-            dfs(ans,i,i);
+            ans[i] = vector<int>(ancestors[i].begin(),ancestors[i].end());
+            sort(ans[i].begin(),ans[i].end());
         }
+        
         return ans;
     }
 };
