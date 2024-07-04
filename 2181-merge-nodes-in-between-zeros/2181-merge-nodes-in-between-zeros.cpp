@@ -29,8 +29,6 @@ public:
         solve(head->next,currSum);
     }
     ListNode* mergeNodes(ListNode* head) {
-        tail=nullptr;
-        ans=nullptr;
         solve(head->next,0);
         return ans;
     }
