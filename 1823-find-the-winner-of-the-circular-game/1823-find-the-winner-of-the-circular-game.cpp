@@ -1,21 +1,10 @@
 class Solution {
 public:
+    int solve(int n,int k){
+        if(n==1)return 0;
+        return (solve(n-1,k)+k)%n;
+    }
     int findTheWinner(int n, int k) {
-        set<int>s;
-        for(int i=1;i<=n;i++){
-            s.insert(i);
-        }
-        int curr=0;
-        int size=n;
-        k--;
-        while(true){
-            if(size==1)return *s.begin();
-            curr+=k;
-            curr%=size;
-            s.erase(next(s.begin(),curr));
-            size--;
-            curr%=size;
-        }
-        return -1;
+        return solve(n,k)+1;
     }
 };
