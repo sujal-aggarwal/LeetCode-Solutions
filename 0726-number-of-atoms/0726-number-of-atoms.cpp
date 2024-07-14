@@ -19,7 +19,7 @@ public:
                 int count = (num.empty()) ? 1 : stoi(num);
                 current[element] += count;
             } else if (formula[i] == '(') {
-                st.push(move(current));
+                st.push((current));
                 current.clear();
                 i++;
             } else if (formula[i] == ')') {
@@ -34,7 +34,7 @@ public:
                     for (auto& [element, count] : current) {
                         st.top()[element] += count * multiplier;
                     }
-                    current = move(st.top());
+                    current = (st.top());
                     st.pop();
                 }
             }
