@@ -11,50 +11,46 @@
  */
 class Solution {
 public:
-    void makeGraph(TreeNode* currNode,TreeNode* prevNode,unordered_map<TreeNode*,vector<TreeNode*>>& adj,unordered_set<TreeNode*>& leafNodes){
-        if(!currNode)return ;
-        if(!currNode->left && !currNode->right){
-            leafNodes.insert(currNode);
+    void pathMaker(TreeNode* root,vector<string>& paths,string& currPath){
+        
+        if(!root->left && !root->right){
+            paths.push_back(currPath);
+            return;
         }
-        if(prevNode){
-            adj[prevNode].push_back(currNode);
-            adj[currNode].push_back(prevNode);
+        
+        if(root->left){
+            currPath+='L';
+            pathMaker(root->left,paths,currPath);
+            currPath.pop_back();
         }
-        makeGraph(currNode->left,currNode,adj,leafNodes);
-        makeGraph(currNode->right,currNode,adj,leafNodes);
+        
+        if(root->right){
+            currPath+='R';
+            pathMaker(root->right,paths,currPath);
+            currPath.pop_back();
+        }
+        
     }
     int countPairs(TreeNode* root, int distance) {
-        unordered_map<TreeNode*,vector<TreeNode*>> adj;
-        unordered_set<TreeNode*> leafNodes;
+        vector<string>paths;
+        string currPath="";
+        pathMaker(root,paths,currPath);
         
-        makeGraph(root,nullptr,adj,leafNodes);
+        int result=0,n=paths.size();
         
-        int count=0;
-        
-        for(auto leaf:leafNodes){
-            unordered_set<TreeNode*>seen;
-            queue<TreeNode*>q;
-            seen.insert(leaf);
-            q.push(leaf);
-            for(int i=0;i<=distance;i++){
-                int size=q.size();
-                for(int j=0;j<size;j++){
-                    TreeNode* curr=q.front();
-                    q.pop();
-                    
-                    if(leafNodes.find(curr)!=leafNodes.end() && curr!=leaf){
-                        count++;
-                    }
-                    
-                    for(auto v:adj[curr]){
-                        if(seen.find(v)==seen.end()){
-                            q.push(v);
-                            seen.insert(v);
-                        }
-                    }
+        for(int i = 0; i < n - 1; i++)
+        {
+            for(int j = i + 1; j < n; j++)
+            {
+                int prefixLength = 0;
+                for(int k = 0; k < min(paths[i].length(), paths[j].length()); k++)
+                {
+                    if(paths[i][k] != paths[j][k]) break;
+                    prefixLength++;
                 }
+                if(paths[i].length() + paths[j].length() - prefixLength * 2 <= distance) result++;
             }
         }
-        return count/2;
+        return result;
     }
 };
