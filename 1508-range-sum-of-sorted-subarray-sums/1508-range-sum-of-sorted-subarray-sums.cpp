@@ -2,18 +2,21 @@ class Solution {
 public:
     int mod=1e9+7;
     int rangeSum(vector<int>& nums, int n, int left, int right) {
-        vector<int>v;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
         for(int i=0;i<n;i++){
-            int curr=0;
-            for(int j=i;j<n;j++){
-                curr+=nums[j];
-                v.push_back(curr);
-            }
+            pq.push({nums[i],i});
         }
-        sort(v.begin(),v.end());
+        int count=0;
         int sum=0;
-        for(int i=left-1;i<right;i++){
-            sum=(sum + v[i]%mod + 0LL)%mod;
+        while(!pq.empty()){
+            if(count>right)break;
+            count++;
+            auto it=pq.top();
+            pq.pop();
+            if(count>=left && count<=right)sum=(sum+it.first%mod)%mod;
+            if(it.second+1<n){
+                pq.push({it.first+nums[it.second+1],it.second+1});
+            }
         }
         return sum;
     }
