@@ -1,0 +1,1 @@
+select id from weather w where temperature > (select temperature from weather v where v.recordDate = date_sub(w.recordDate, interval 1 day));
